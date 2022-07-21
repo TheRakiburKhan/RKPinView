@@ -24,7 +24,6 @@ private class RKPinViewFlowLayout: UICollectionViewFlowLayout {
     override var flipsHorizontallyInOppositeLayoutDirection: Bool { return true }
 }
 
-@objcMembers
 public class RKPinView: UIView {
     
     // MARK: - Private Properties -
@@ -100,7 +99,7 @@ public class RKPinView: UIView {
         collectionView.register(collectionViewNib, forCellWithReuseIdentifier: reuseIdentifier)
         flowLayout.scrollDirection = .vertical
         collectionView.isScrollEnabled = false
-                
+        
         self.addSubview(view)
         view.frame = bounds
         view.autoresizingMask = [UIView.AutoresizingMask.flexibleWidth, UIView.AutoresizingMask.flexibleHeight]
@@ -204,21 +203,21 @@ public class RKPinView: UIView {
         }
         
         switch style {
-        case .none:
-            setupUnderline(color: UIColor.clear, withThickness: 0)
-            containerView.layer.borderWidth = 0
-            containerView.layer.borderColor = UIColor.clear.cgColor
-        case .underline:
-            if isActive { setupUnderline(color: activeBorderLineColor, withThickness: activeBorderLineThickness) }
-            else { setupUnderline(color: borderLineColor, withThickness: borderLineThickness) }
-            containerView.layer.borderWidth = 0
-            containerView.layer.borderColor = UIColor.clear.cgColor
-        case .box:
-            setupUnderline(color: UIColor.clear, withThickness: 0)
-            containerView.layer.borderWidth = isActive ? activeBorderLineThickness : borderLineThickness
-            containerView.layer.borderColor = isActive ? activeBorderLineColor.cgColor : borderLineColor.cgColor
+            case .none:
+                setupUnderline(color: UIColor.clear, withThickness: 0)
+                containerView.layer.borderWidth = 0
+                containerView.layer.borderColor = UIColor.clear.cgColor
+            case .underline:
+                if isActive { setupUnderline(color: activeBorderLineColor, withThickness: activeBorderLineThickness) }
+                else { setupUnderline(color: borderLineColor, withThickness: borderLineThickness) }
+                containerView.layer.borderWidth = 0
+                containerView.layer.borderColor = UIColor.clear.cgColor
+            case .box:
+                setupUnderline(color: UIColor.clear, withThickness: 0)
+                containerView.layer.borderWidth = isActive ? activeBorderLineThickness : borderLineThickness
+                containerView.layer.borderColor = isActive ? activeBorderLineColor.cgColor : borderLineColor.cgColor
         }
-     }
+    }
     
     @IBAction fileprivate func refreshPinView(completionHandler: (()->())? = nil) {
         view.removeFromSuperview()
@@ -248,7 +247,7 @@ public class RKPinView: UIView {
         }
         return password.joined()
     }
-        
+    
     /// Clears the entered PIN and refreshes the view
     /// - Parameter completionHandler: Called after the pin is cleared the view is re-rendered.
     @objc
@@ -275,27 +274,27 @@ public class RKPinView: UIView {
         
         password = []
         for (index,char) in pin.enumerated() {
-
+            
             guard index < pinLength else { return }
-
+            
             // Get the first textField
             guard let textField = collectionView.cellForItem(at: IndexPath(item: index, section: 0))?.viewWithTag(101 + index) as? RKPinField,
-                let placeholderLabel = collectionView.cellForItem(at: IndexPath(item: index, section: 0))?.viewWithTag(400) as? UILabel
+                  let placeholderLabel = collectionView.cellForItem(at: IndexPath(item: index, section: 0))?.viewWithTag(400) as? UILabel
             else {
                 showPinError(error: "ERR-103: Type Mismatch")
                 return
             }
-
+            
             textField.text = String(char)
             placeholderLabel.isHidden = true
-
+            
             //secure text after a bit
             DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(secureTextDelay), execute: {
                 if textField.text != "" {
                     if self.shouldSecureText { textField.text = self.secureCharacter } else {}
                 }
             })
-
+            
             // store text
             password.append(String(char))
             validateAndSendCallback()
@@ -314,9 +313,9 @@ extension RKPinView : UICollectionViewDataSource, UICollectionViewDelegate, UICo
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
         
         guard let textField = cell.viewWithTag(100) as? RKPinField,
-            let containerView = cell.viewWithTag(51),
-            let underLine = cell.viewWithTag(50),
-            let placeholderLabel = cell.viewWithTag(400) as? UILabel
+              let containerView = cell.viewWithTag(51),
+              let underLine = cell.viewWithTag(50),
+              let placeholderLabel = cell.viewWithTag(400) as? UILabel
         else {
             showPinError(error: "ERR-104: Tag Mismatch")
             return UICollectionViewCell()
@@ -419,14 +418,14 @@ extension RKPinView : UITextFieldDelegate
         } else { showPinError(error: "ERR-105: Type Mismatch") }
         
         if let containerView = textField.superview?.viewWithTag(51),
-        let underLine = textField.superview?.viewWithTag(50) {
+           let underLine = textField.superview?.viewWithTag(50) {
             self.stylePinField(containerView: containerView, underLine: underLine, isActive: true)
         } else { showPinError(error: "ERR-106: Type Mismatch") }
     }
     
     public func textFieldDidEndEditing(_ textField: UITextField) {
         if let containerView = textField.superview?.viewWithTag(51),
-        let underLine = textField.superview?.viewWithTag(50) {
+           let underLine = textField.superview?.viewWithTag(50) {
             self.stylePinField(containerView: containerView, underLine: underLine, isActive: false)
         } else { showPinError(error: "ERR-107: Type Mismatch") }
     }
@@ -437,7 +436,7 @@ extension RKPinView : UITextFieldDelegate
             DispatchQueue.main.async { self.pastePin(pin: string) }
             return false
         } else if let cursorLocation = textField.position(from: textField.beginningOfDocument, offset: (range.location + string.count)),
-            cursorLocation == textField.endOfDocument {
+                  cursorLocation == textField.endOfDocument {
             // If the user moves the cursor to the beginning of the field, move it to the end before textEntry,
             // so the oldest digit is removed in textFieldDidChange: to ensure single character entry
             textField.selectedTextRange = textField.textRange(from: cursorLocation, to: textField.beginningOfDocument)

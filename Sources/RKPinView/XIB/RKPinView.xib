@@ -48,7 +48,7 @@ Retry?</string>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HLL-km-Lja" userLabel="Refresh Button">
                             <rect key="frame" x="0.0" y="0.0" width="368" height="87"/>
                             <connections>
-                                <action selector="refreshPinView" destination="-1" eventType="touchUpInside" id="Xxy-7O-pgc"/>
+                                <action selector="refreshPinViewWithCompletionHandler:" destination="-1" eventType="touchUpInside" id="okY-ye-VkA"/>
                             </connections>
                         </button>
                     </subviews>
