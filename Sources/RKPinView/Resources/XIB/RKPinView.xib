@@ -10,8 +10,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RKPinView" customModule="RKPinView">
             <connections>
-                <outlet property="collectionView" destination="RCS-bi-tRO" id="M5R-wh-hrA"/>
-                <outlet property="errorView" destination="j1w-AD-uhD" id="4Cp-eZ-BPa"/>
+                <outlet property="collectionView" destination="RCS-bi-tRO" id="dWl-uG-EMi"/>
+                <outlet property="errorView" destination="j1w-AD-uhD" id="2NG-DI-8gD"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
